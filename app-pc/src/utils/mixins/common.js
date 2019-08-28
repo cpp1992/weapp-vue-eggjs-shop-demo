@@ -98,8 +98,7 @@ export const tableMixin = {
       mx_customize_pagination: undefined, // 自定义分页，在组件内定义覆盖此字段
     };
   },
-  created() {
-  },
+  created() {},
   computed: {
     // 默认表格不需要在每个页面单独处理
     mx_defaultTableData() {
@@ -139,7 +138,10 @@ export const tableMixin = {
       targetTable.params.sort = [];
 
       if (sortOrder) {
-        targetTable.params.sort.splice(0, 1, [sort.prop, sortOrder.substring(0, sortOrder.indexOf('ending'))]);
+        targetTable.params.sort.splice(0, 1, [
+          sort.prop,
+          sortOrder.substring(0, sortOrder.indexOf('ending')),
+        ]);
       }
       return _.isFunction(this.query) && this.query();
     },

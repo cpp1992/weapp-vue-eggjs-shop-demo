@@ -99,6 +99,7 @@
 <script>
   import { pageMixin } from '../../../utils/mixins/common';
   import orderMixin from '../../../utils/mixins/order';
+  import _ from 'lodash';
 
   export default {
     name: 'orderView',

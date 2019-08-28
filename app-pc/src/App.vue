@@ -224,7 +224,6 @@
 
 <script>
   import { mapState } from 'vuex';
-
   // 调整tab样式
   const adjustTabLayout = (el, binding) => {
     if (binding.value !== binding.oldValue) {
