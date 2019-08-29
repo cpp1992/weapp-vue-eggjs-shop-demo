@@ -1,20 +1,21 @@
 // axios封装
-import axios from 'axios';
-import { MessageBox, Loading } from 'element-ui';
-import store from '../store';
-import router from '../router';
+import axios from "axios";
+import { MessageBox, Loading } from "element-ui";
+import store from "../store";
+import router from "../router";
 
 let saveNewOrModifyModule; // 记录请求的模块
 let loadingInstance; // loading
 
 // 环境的切换
-// if (process.env.NODE_ENV === 'development') {
-//   axios.defaults.baseURL = 'http://localhost:8081';
-// } else if (process.env.NODE_ENV === 'debug') {
-//   axios.defaults.baseURL = 'http://localhost:8081';
-// } else if (process.env.NODE_ENV === 'production') {
-//   axios.defaults.baseURL = 'http://localhost:8081';
-// }
+if (process.env.NODE_ENV === "development") {
+  console.log("development123123");
+  axios.defaults.baseURL = "http://localhost:8080";
+} else if (process.env.NODE_ENV === "debug") {
+  axios.defaults.baseURL = "http://localhost:8080";
+} else if (process.env.NODE_ENV === "production") {
+  axios.defaults.baseURL = "http://localhost:8080";
+}
 
 // 请求超时时间
 // axios.defaults.timeout = 10000;
@@ -24,19 +25,19 @@ let loadingInstance; // loading
 
 // 请求拦截器
 axios.interceptors.request.use(
-  (config) => {
+  config => {
     // 加载loading
     loadingInstance = Loading.service({
-      background: 'rgb(0,0,0,0)',
+      background: "rgb(0,0,0,0)"
     });
     return config;
   },
-  error => Promise.error(error),
+  error => Promise.error(error)
 );
 
 // 响应拦截器
 axios.interceptors.response.use(
-  (response) => {
+  response => {
     const { data = {} } = response;
     const { code, message } = data;
 
@@ -46,19 +47,19 @@ axios.interceptors.response.use(
     // 如果有模块A发起保存请求成功（意味着新建或修改），将模块A名称记录进map
     // 用于下次进入其他模块（比如：模块B）时，如果模块B内有调用模块A的请求数据接口，则触发请求，
     if (saveNewOrModifyModule) {
-      store.commit('setRefreshDataMap', { key: saveNewOrModifyModule });
+      store.commit("setRefreshDataMap", { key: saveNewOrModifyModule });
     }
 
     if (code !== 0) {
-      MessageBox.alert(message, '提示', {
-        type: 'warning',
+      MessageBox.alert(message, "提示", {
+        type: "warning"
       });
       return Promise.reject(response);
     }
     return Promise.resolve(data);
   },
   // 服务器状态码不是200的情况
-  (error) => {
+  error => {
     const { response } = error;
     const { status, data = {} } = response || {};
 
@@ -68,20 +69,20 @@ axios.interceptors.response.use(
     switch (status) {
       case 401:
         // 未登录或过期
-        router.push({ name: 'login' });
+        router.push({ name: "login" });
         break;
       case 404:
-        MessageBox.alert('服务器出错', '提示', {
-          type: 'error',
+        MessageBox.alert("服务器出错", "提示", {
+          type: "error"
         });
         break;
       default:
-        MessageBox.alert(data.message || '服务器出错', '提示', {
-          type: 'error',
+        MessageBox.alert(data.message || "服务器出错", "提示", {
+          type: "error"
         });
     }
     return Promise.reject(response);
-  },
+  }
 );
 
 /**
@@ -97,13 +98,16 @@ export function get(url, params, module) {
   saveNewOrModifyModule = module;
 
   return new Promise((resolve, reject) => {
-    axios.get(url, {
-      params,
-    }).then((res) => {
-      resolve(res.data);
-    }).catch((err = {}) => {
-      reject(err);
-    });
+    axios
+      .get(url, {
+        params
+      })
+      .then(res => {
+        resolve(res.data);
+      })
+      .catch((err = {}) => {
+        reject(err);
+      });
   });
 }
 
@@ -112,10 +116,13 @@ export function post(url, params, module) {
   saveNewOrModifyModule = module;
 
   return new Promise((resolve, reject) => {
-    axios.post(url, params).then((res) => {
-      resolve(res.data);
-    }).catch((err = {}) => {
-      reject(err);
-    });
+    axios
+      .post(url, params)
+      .then(res => {
+        resolve(res.data);
+      })
+      .catch((err = {}) => {
+        reject(err);
+      });
   });
 }
