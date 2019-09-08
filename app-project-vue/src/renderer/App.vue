@@ -237,7 +237,8 @@
 
 <script>
 import { mapState } from "vuex";
-import './styles/variables.scss';
+import "./styles/variables.scss";
+import { MessageBox } from "element-ui";
 
 // 调整tab样式
 const adjustTabLayout = (el, binding) => {
@@ -311,6 +312,7 @@ export default {
     };
   },
   created() {
+    this.checkLogin();
     this.initUser();
     this.initNotice();
   },
@@ -456,6 +458,20 @@ export default {
     }
   },
   methods: {
+    // 检查登陆态
+    async checkLogin() {
+      try {
+        const loginStatus = await this.$api.checkLogin();
+        console.log("loginStatus", loginStatus);
+        !loginStatus && this.$router.push({ name: "login" });
+      } catch (e) {
+        console.log("loginStatus123123123", e);
+        this.$router.push({ name: "login" });
+        MessageBox.alert(e || "服务器出错", "提示", {
+          type: "error"
+        });
+      }
+    },
     // 初始化用户信息
     initUser() {
       const name = this.$cookie.get("name");
@@ -583,7 +599,7 @@ export default {
 }
 
 a {
-  color: #5C9ACF;
+  color: #5c9acf;
 }
 
 input {
@@ -621,7 +637,7 @@ body {
 .app-aside {
   margin: 20px 0 20px 20px;
   border-radius: 6px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow: hidden !important;
   transition: all 0.3s ease-in-out;
 
@@ -649,7 +665,7 @@ body {
   z-index: 9;
   align-items: center;
   font-size: 12px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
   .app-header__left {
@@ -688,7 +704,7 @@ body {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: #FF5B5B;
+        background-color: #ff5b5b;
         vertical-align: middle;
       }
 
@@ -716,7 +732,7 @@ body {
   position: relative;
   padding: 10px 5px 15px;
   border-radius: 6px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   .app-page-header {
     padding: 0 15px;
@@ -726,7 +742,7 @@ body {
       display: flex;
       align-items: center;
       padding-bottom: 10px;
-      border-bottom: 1px solid #5C9ACF;
+      border-bottom: 1px solid #5c9acf;
     }
   }
 
@@ -745,7 +761,7 @@ body {
     .app-page-tools__collapse {
       .app-menu-icon {
         font-size: 28px;
-        color: #5C9ACF;
+        color: #5c9acf;
         cursor: pointer;
       }
     }
@@ -766,16 +782,12 @@ body {
     height: 100%;
     border-radius: 0;
     overflow: hidden;
-    background: linear-gradient(
-      to bottom right,
-      #FF5B5B,
-      #5C9ACF
-    );
+    background: linear-gradient(to bottom right, #ff5b5b, #5c9acf);
   }
 
   .el-breadcrumb__inner.is-link,
   .el-breadcrumb__inner a {
-    color: #5C9ACF !important;
+    color: #5c9acf !important;
   }
 }
 
@@ -793,7 +805,7 @@ body {
 
   .switch-tab-prev,
   .switch-tab-next {
-    color: #5C9ACF;
+    color: #5c9acf;
     cursor: pointer;
   }
 
@@ -855,12 +867,12 @@ body {
 
         &.active {
           .tab-li-content {
-            color: #FFFFFF;
-            border-color: #5C9ACF;
-            background-color: #5C9ACF;
+            color: #ffffff;
+            border-color: #5c9acf;
+            background-color: #5c9acf;
 
             .tab-li-icon {
-              color: #FFFFFF !important;
+              color: #ffffff !important;
             }
           }
         }
@@ -872,7 +884,7 @@ body {
 /*功能按钮*/
 .app-feature-btn {
   margin-left: 25px;
-  color: #5C9ACF;
+  color: #5c9acf;
   font-size: 18px;
   cursor: pointer;
   vertical-align: middle !important;
@@ -890,7 +902,7 @@ body {
 .content-title {
   padding-bottom: 10px;
   margin-bottom: 15px;
-  color: #5C9ACF;
+  color: #5c9acf;
   font-weight: bold;
   border-bottom: 1px solid #e9ecf3;
 }

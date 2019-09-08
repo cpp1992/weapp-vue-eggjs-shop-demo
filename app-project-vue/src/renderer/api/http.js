@@ -10,7 +10,8 @@ let loadingInstance; // loading
 // 环境的切换
 if (process.env.NODE_ENV === "development") {
   console.log("development123123");
-  axios.defaults.baseURL = "http://localhost:8080";
+  // /buyer/getUserInfo
+  axios.defaults.baseURL = "http://47.103.154.48:7001";
 } else if (process.env.NODE_ENV === "debug") {
   axios.defaults.baseURL = "http://localhost:8080";
 } else if (process.env.NODE_ENV === "production") {

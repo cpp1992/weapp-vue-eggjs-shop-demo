@@ -1,0 +1,12 @@
+
+海关系统  http://180.136.156.91:19002/   dxbmcx abcABC@123456
+
+商户系统  http://bmhs_decl.singlewindow.gx.cn/ 
+//这个是商户进行申报用的，海关的可以查询得到车辆拉什么货，重量，车牌号等。然后，JYT那个系统就是对接了，海关的端口，日常方便商户及边民使用查询
+
+天源的运营系统登录网址  ctms.bianhaiyun.com  13641590000  12345678
+
+天源的打单系统 http://mt.order.bianhaiyun.com  账号A1-1  密码123456
+
+八找网商户系统  JYT.exe  账号：100298383  密码：298383  
+八找网互市大数据  http://yun.89bay.com/hg/default.html
